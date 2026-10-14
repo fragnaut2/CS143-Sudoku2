@@ -49,7 +49,30 @@ public class SudokuBoard
 			}
 		}
 
+		for(int r = 0; r < 9; r++){
+			// System.out.println("Checking R: " + r);
+			if(!checkRow(r)){
+				return false;
+			}
+		}
+
 		return valid;
+	}
+
+	private boolean checkRow(int index){
+		List<Integer> original = new ArrayList<Integer>();
+		Set<Integer> shortened = new HashSet<>();
+
+		for (int c = 0; c < 9; c++){
+			if(board[index][c] != 0){
+				original.add(board[index][c]);
+				shortened.add(board[index][c]);
+			}
+		}
+
+		// System.out.print(original.toString() + shortened.toString()); 
+
+		return original.size() == shortened.size();
 	}
 
 	public String toString()
