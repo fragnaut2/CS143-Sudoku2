@@ -36,8 +36,25 @@ public class SudokuBoard
 		}
 	}
 
+	public boolean isValid(){
+		boolean valid = false;
+
+		for(int r = 0; r < board.length; r++){
+			for(int c = 0; c < board[r].length; c++){
+				if(board[r][c] >= 0 && board[r][c] <= 9){
+					valid = true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		return valid;
+	}
+
 	public String toString()
 	{
+		// System.out.println(board.toString());
 		String result = "";
 		for (int r = 0; r < board.length; r++)
 		{
@@ -84,4 +101,14 @@ public class SudokuBoard
 		}
 		return result;
 	}
+
+	// public String toString(){
+	// 	String result = "";
+	// 	for(int r = 0; r < board.length; r++){
+	// 		for(int c = 0; c < board[r].length; c++){
+	// 			result += board[r][c] + ", ";
+	// 		}
+	// 	}
+	// 	return result;
+	// }
 }
