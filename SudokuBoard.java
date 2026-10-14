@@ -51,14 +51,21 @@ public class SudokuBoard
 
 		for(int r = 0; r < 9; r++){
 			// System.out.println("Checking R: " + r);
-			if(!checkRow(r)){
+			if(!checkRowValid(r)){
 				return false;
 			}
 		}
 
 		for(int c = 0; c < 9; c++){
 			// System.out.println("Checking R: " + r);
-			if(!checkCol(c)){
+			if(!checkColValid(c)){
+				return false;
+			}
+		}
+		
+		for(int s = 0; s < 9; s++){
+			// System.out.println("Checking R: " + r);
+			if(!checkMiniValid(s)){
 				return false;
 			}
 		}
@@ -67,7 +74,7 @@ public class SudokuBoard
 		return valid;
 	}
 
-	private boolean checkRow(int index){
+	private boolean checkRowValid(int index){
 		List<Integer> original = new ArrayList<Integer>();
 		Set<Integer> shortened = new HashSet<>();
 
@@ -83,7 +90,7 @@ public class SudokuBoard
 		return original.size() == shortened.size();
 	}
 
-	private boolean checkCol(int index){
+	private boolean checkColValid(int index){
 		List<Integer> original = new ArrayList<Integer>();
 		Set<Integer> shortened = new HashSet<>();
 
@@ -97,6 +104,33 @@ public class SudokuBoard
 		// System.out.print(original.toString() + shortened.toString()); 
 
 		return original.size() == shortened.size();
+	}
+
+	private boolean checkMiniValid(int spot){
+		List<Integer> original = new ArrayList<Integer>();
+		Set<Integer> shortened = new HashSet<>();
+		int[][] miniSquare = miniSquare(spot);
+
+		for(int r = 0; r < 3; r++){
+			for(int c = 0; c < 3; c++){
+				if(miniSquare[r][c] != 0){
+					original.add(miniSquare[r][c]);
+					shortened.add(miniSquare[r][c]);
+				}
+			}
+		}
+
+		return original.size() == shortened.size();
+	}
+
+	private int[][] miniSquare(int spot){
+		int[][] mini = new int[3][3];
+		for(int r = 0; r < 3; r++){
+			for(int c = 0; c < 3; c++){
+				mini[r][c] = board[(spot) / 3 * 3 + r][(spot) % 3 * 3 + c];
+			}
+		}
+		return mini;
 	}
 
 
