@@ -56,6 +56,14 @@ public class SudokuBoard
 			}
 		}
 
+		for(int c = 0; c < 9; c++){
+			// System.out.println("Checking R: " + r);
+			if(!checkCol(c)){
+				return false;
+			}
+		}
+
+
 		return valid;
 	}
 
@@ -74,6 +82,23 @@ public class SudokuBoard
 
 		return original.size() == shortened.size();
 	}
+
+	private boolean checkCol(int index){
+		List<Integer> original = new ArrayList<Integer>();
+		Set<Integer> shortened = new HashSet<>();
+
+		for (int r = 0; r < 9; r++){
+			if(board[r][index] != 0){
+				original.add(board[r][index]);
+				shortened.add(board[r][index]);
+			}
+		}
+
+		// System.out.print(original.toString() + shortened.toString()); 
+
+		return original.size() == shortened.size();
+	}
+
 
 	public String toString()
 	{
