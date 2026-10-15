@@ -74,6 +74,112 @@ public class SudokuBoard
 		return valid;
 	}
 
+	public boolean isSolved(){
+
+		for(int r = 0; r < 9; r++){
+			// System.out.println("Checking R: " + r);
+			if(!checkRowSolved(r)){
+				return false;
+			}
+		}
+
+		for(int c = 0; c < 9; c++){
+			// System.out.println("Checking R: " + r);
+			if(!checkColSolved(c)){
+				return false;
+			}
+		}
+		
+		for(int s = 0; s < 9; s++){
+			// System.out.println("Checking R: " + r);
+			if(!checkMiniSolved(s)){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean checkRowSolved(int index){
+		Map<Integer, Integer> occurances = new HashMap<>();
+
+		for(int c = 0; c < 9; c++){
+			if(!occurances.containsKey(board[index][c])){
+				occurances.put(board[index][c], 1);
+			} else {
+				occurances.put(board[index][c], occurances.get(board[index][c]) + 1);
+			}
+		}
+
+		if(occurances.size() == 9){
+			for(int key : occurances.keySet()){
+				if(occurances.get(key) > 1){
+					return false;
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean checkColSolved(int index){
+		Map<Integer, Integer> occurances = new HashMap<>();
+
+		for(int r = 0; r < 9; r++){
+			if(!occurances.containsKey(board[r][index])){
+				occurances.put(board[r][index], 1);
+			} else {
+				occurances.put(board[r][index], occurances.get(board[r][index]) + 1);
+			}
+		}
+
+		if(occurances.size() == 9){
+			for(int key : occurances.keySet()){
+				if(occurances.get(key) > 1){
+					return false;
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean checkMiniSolved(int spot){
+		Map<Integer, Integer> occurances = new HashMap<>();
+		int[][] mini = miniSquare(spot);
+
+		for(int r = 0; r < 3; r++){
+			for(int c = 0; c < 3; c++){
+				if(!occurances.containsKey(mini[r][c])){
+					occurances.put(mini[r][c], 1);
+				} else {
+					occurances.put(mini[r][c], occurances.get(mini[r][c]) + 1);
+				}
+			}
+		}
+
+		// for(int r = 0; r < 9; r++){
+		// 	if(!occurances.containsKey(board[r][index])){
+		// 		occurances.put(board[r][index], 1);
+		// 	} else {
+		// 		occurances.put(board[r][index], occurances.get(board[r][index]) + 1);
+		// 	}
+		// }
+
+		if(occurances.size() == 9){
+			for(int key : occurances.keySet()){
+				if(occurances.get(key) > 1){
+					return false;
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+
 	private boolean checkRowValid(int index){
 		List<Integer> original = new ArrayList<Integer>();
 		Set<Integer> shortened = new HashSet<>();
